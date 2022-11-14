@@ -1,0 +1,3 @@
+pserve development.ini --reload
+
+python setup.py develop
