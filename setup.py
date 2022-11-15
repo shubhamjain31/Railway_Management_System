@@ -11,11 +11,12 @@ with open(os.path.join(here, 'README.md')) as f:
 requires = [
     'setuptools',
     'plaster_pastedeploy',
-    'SQLAlchemy',
-    'transaction',
     'pyramid',
+    'pyramid-ipython',
     'pyramid_jinja2',
     'pyramid_tm',
+    'SQLAlchemy',
+    'transaction',
     'pyramid_debugtoolbar',
     'pyramid_exclog',
     'zope.sqlalchemy',
@@ -55,6 +56,9 @@ setup(
     entry_points={
         'paste.app_factory': [
             'main = core:main',
+        ],
+        'console_scripts': [
+            'initdb = core.scripts.initializedb:main',
         ],
     },
 )
