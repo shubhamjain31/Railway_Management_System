@@ -28,7 +28,7 @@ Base = declarative_base()
 crypt = cryptacular.bcrypt.BCRYPTPasswordManager()
 
 def hash_password(password):
-    return Unicode(crypt.encode(password))
+    return crypt.encode(password)
 
 
 class User(Base):
@@ -40,6 +40,7 @@ class User(Base):
     username        = Column(String(16), nullable=False)
     name            = Column(Unicode(50))
     email           = Column(Unicode(50))
+    token           = Column(Unicode, nullable=False)
     phone           = Column(String(16), nullable=False)
     date_joined     = Column(DateTime, nullable=False)
 
