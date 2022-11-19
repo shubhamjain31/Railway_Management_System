@@ -6,6 +6,8 @@ from sqlalchemy.orm import sessionmaker
 
 import zope.sqlalchemy
 
+from .security import CookieCSRFStoragePolicy, MySecurityPolicy
+
 def get_session_factory(engine):
     """Return a generator of database session objects."""
     factory = sessionmaker()
@@ -31,6 +33,12 @@ def main(global_config, **settings):
         config.include('pyramid_sqlalchemy')
         config.include('pyramid_tm')
         config.include('.routes')
+
+        config.set_csrf_storage_policy(CookieCSRFStoragePolicy())
+        config.set_default_csrf_options(require_csrf=True)
+
+        config.set_security_policy(MySecurityPolicy(settings['auth.secret']))
+
 
         session_factory = get_session_factory(engine_from_config(settings, prefix='sqlalchemy.'))
         config.registry['dbsession_factory'] = session_factory
