@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 import zope.sqlalchemy
 
-from .security import CookieCSRFStoragePolicy, MySecurityPolicy
+from .security import CookieCSRFStoragePolicy, SecurityPolicy
 
 def get_session_factory(engine):
     """Return a generator of database session objects."""
@@ -24,7 +24,7 @@ def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
 
-    my_session_factory = BaseCookieSessionFactory('itsaseekreet')
+    my_session_factory = BaseCookieSessionFactory('seekrit')
     with Configurator(settings=settings, session_factory=my_session_factory) as config:
         settings['tm.manager_hook'] = 'pyramid_tm.explicit_manager'
 
@@ -37,7 +37,7 @@ def main(global_config, **settings):
         config.set_csrf_storage_policy(CookieCSRFStoragePolicy())
         config.set_default_csrf_options(require_csrf=True)
 
-        config.set_security_policy(MySecurityPolicy(settings['auth.secret']))
+        config.set_security_policy(SecurityPolicy(secret=settings['core.secret']))
 
 
         session_factory = get_session_factory(engine_from_config(settings, prefix='sqlalchemy.'))

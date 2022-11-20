@@ -9,6 +9,11 @@ from pyramid.view import (
     view_config,
 )
 
+from ..security import (
+    USERS,
+    check_password
+)
+
 from .. import models
 
 
@@ -22,17 +27,14 @@ def login(request):
     if request.method == 'POST':
         login = request.params['login']
         password = request.params['password']
-        print(login, password,request.dbsession.query(models.User)
-            .filter_by(name=login)
-            .first())
         user = (
             request.dbsession.query(models.User)
-            .filter_by(name=login)
+            .filter_by(username=login)
             .first()
         )
-        if user is not None and user.check_password(password):
+        if user is not None and check_password(password, user.password):
             new_csrf_token(request)
-            headers = remember(request, user.id)
+            headers = remember(request, user.user_id)
             return HTTPSeeOther(location=next_url, headers=headers)
         message = 'Failed login'
         request.response.status = 400

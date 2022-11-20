@@ -1,5 +1,3 @@
-from pyramid.paster import get_appsettings
-from pyramid.scripts.common import parse_vars
 from sqlalchemy import engine_from_config
 from decouple import config
 from core.models import Base

@@ -59,14 +59,3 @@ class User(Base):
         super().__init__(*args, **kwargs)
         self.date_joined = datetime.now()
         self.token = secrets.token_urlsafe(64)
-
-    # @classmethod
-    # def get_by_username(cls, username):
-    #     return DBSession.query(cls).filter(cls.username == username).first()
-
-    @classmethod
-    def check_password(cls, username, password):
-        user = cls.get_by_username(username)
-        if not user:
-            return False
-        return crypt.check(user.password, password)

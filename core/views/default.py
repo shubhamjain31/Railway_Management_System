@@ -6,6 +6,6 @@ from ..models import User
 def my_view(request):
     # user = User(username="admin", password="demo1234", name="Shubham Jain", email="admin@email.com", phone="9876542310")
     # request.dbsession.add(user)
-    # print(len(request.dbsession.query(User).all()))
-    print(request.session)
+    print(request.dbsession.query(User).all()[3].password)
+    print(request.authenticated_userid)
     return {'project': 'myproject'}
