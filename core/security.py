@@ -38,7 +38,7 @@ class SecurityPolicy:
     def authenticated_userid(self, request):
         user = self.identity(request)
         if user is not None:
-            return user.id
+            return user.user_id
 
     def remember(self, request, userid, **kw):
         return self.authtkt.remember(request, userid, **kw)

@@ -1,0 +1,9 @@
+{% extends "layout.jinja2" %}
+{% from "jinja_helpers.jinja2" import render_field %}
+
+{% block content %}
+
+        Welcome <strong>{{request.authenticated_userid}}</strong> ::
+        <a href="{{request.route_url('logout')}}">Sign Out</a>
+ 
+{% endblock %}
