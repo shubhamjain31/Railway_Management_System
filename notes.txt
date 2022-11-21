@@ -1,3 +1,6 @@
 pserve development.ini --reload
 
 python setup.py develop
+
+
+pcreate -s starter MyProject

@@ -8,13 +8,13 @@ from ..models import User
 @view_config(route_name='home')
 # @view_config(route_name='home', request_method="GET", renderer='json')
 def index(request):
-    print(len(request.dbsession.query(User).all()))
+    # print(request.dbsession.query(User).all())
+    # print(len(request.dbsession.query(User).all()))
     if not request.authenticated_userid:
         url = request.route_url('login') 
         return HTTPFound(location=url)
     
     form = LoginForm()
-    # print(request.authenticated_userid)
     return render_to_response('templates/index.jinja2', {'form': form, 'page_title': 'Home'}, request=request)
 
 @view_config(route_name='register')
@@ -27,7 +27,7 @@ def register(request):
         email       = form.email.data
         phone       = form.phone.data
         
-        new_user = User(username=username, password=password, name=name, email=email, phone=phone)
+        new_user = User(username=username, password=password, name=name, email=email, phone=phone, is_superuser=True)
         request.dbsession.add(new_user)
         return HTTPFound(location=request.route_url('home'))
     return render_to_response('templates/register.jinja2', {'form': form, 'page_title': 'Register'}, request=request)

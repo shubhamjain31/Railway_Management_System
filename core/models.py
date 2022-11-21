@@ -37,6 +37,7 @@ class User(Base):
     Application's user model.
     """
     __tablename__ = 'users'
+
     user_id         = Column(Integer, primary_key=True)
     username        = Column(String(16), nullable=False)
     name            = Column(Unicode(50))
@@ -45,6 +46,8 @@ class User(Base):
     phone           = Column(String(16), nullable=False)
     is_superuser    = Column(Boolean, unique=False, default=False)
     is_active       = Column(Boolean, unique=False, default=True)
+    is_staff        = Column(Boolean, unique=False, default=False)
+    is_verified     = Column(Boolean, unique=False, default=False)
     date_joined     = Column(DateTime, nullable=False)
 
     _password = Column('password', Unicode(60))
