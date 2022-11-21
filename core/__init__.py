@@ -1,5 +1,5 @@
 from pyramid.config import Configurator
-from pyramid.session import BaseCookieSessionFactory
+from pyramid.session import SignedCookieSessionFactory
 
 from sqlalchemy import engine_from_config
 from sqlalchemy.orm import sessionmaker
@@ -24,7 +24,7 @@ def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
 
-    my_session_factory = BaseCookieSessionFactory('seekrit')
+    my_session_factory = SignedCookieSessionFactory('seekrit')
     with Configurator(settings=settings, session_factory=my_session_factory) as config:
         settings['tm.manager_hook'] = 'pyramid_tm.explicit_manager'
 

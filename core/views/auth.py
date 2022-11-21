@@ -37,11 +37,15 @@ def login(request):
         if user is not None and check_password(password, user.password):
             new_csrf_token(request)
             headers = remember(request, user.user_id)
+
+            request.session['username'] = user.username
+            request.session['fullname'] = user.name
+
             return HTTPSeeOther(location=request.route_url('home'), headers=headers)
         message = 'Failed login'
         request.response.status = 400
 
-    return render_to_response('templates/login.jinja2', {'form': form, 'message': message}, request=request)
+    return render_to_response('templates/login.jinja2', {'form': form, 'message': message, 'page_title': 'Login'}, request=request)
     
 @view_config(route_name='logout')
 def logout(request):

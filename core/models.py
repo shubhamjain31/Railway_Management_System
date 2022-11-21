@@ -5,6 +5,7 @@ from sqlalchemy import (
     Column,
     ForeignKey,
     DateTime,
+    Boolean
     )
 
 from sqlalchemy.orm import relationship, synonym
@@ -42,6 +43,8 @@ class User(Base):
     email           = Column(Unicode(50))
     token           = Column(Unicode, nullable=False)
     phone           = Column(String(16), nullable=False)
+    is_superuser    = Column(Boolean, unique=False, default=False)
+    is_active       = Column(Boolean, unique=False, default=True)
     date_joined     = Column(DateTime, nullable=False)
 
     _password = Column('password', Unicode(60))

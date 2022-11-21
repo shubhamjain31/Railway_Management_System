@@ -1,8 +1,24 @@
 {% extends "pyramid_bootstrap:/templates/bs4/layout.jinja2" %}
 
-{% block title %}RMS: {{ name }}{% endblock title %}
-<div class="col-md-10">
-{% block content %}
-    <p>No content</p>
-{% endblock content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}RMS: {{ page_title }}{% endblock title %}
+</head>
+<body>
+
+<div class="navbar navbar-inverse">
+    <div class="container">
+        {% include "templates/navbar.jinja2" %}
+    </div>
 </div>
+
+<div class="container">
+
+    {% block content %}
+    {% endblock content %}
+
+</div>
+
+</body>
+</html>

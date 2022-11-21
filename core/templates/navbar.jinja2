@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav">
+
+            {% if request.authenticated_userid %}
+
+            <span class="navbar-brand mb-0 h1">Admin</span>
+            {% else %}
+            <span class="navbar-brand mb-0 h1">User</span>
+
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/reservation/">Home</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/reservation/bookform/">Book ticket</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/reservation/mybooking/">My Bookings</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/reservation/trainform/">Add Trains</a>
+            </li>
+
+            {% if request.authenticated_userid %}
+            <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/reservation/logout/">Logout</a>
+            </li>
+            {% else %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/reservation/loginform/">Login</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/reservation/registerform/">Register</a>
+            </li>
+
+            {% endif %}
+        </ul>
+    </nav>
