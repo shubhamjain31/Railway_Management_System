@@ -25,28 +25,30 @@ def main(global_config, **settings):
     """
 
     my_session_factory = SignedCookieSessionFactory('seekrit')
-    with Configurator(settings=settings, session_factory=my_session_factory) as config:
-        settings['tm.manager_hook'] = 'pyramid_tm.explicit_manager'
+    config = Configurator(settings=settings, session_factory=my_session_factory)
+    settings['tm.manager_hook'] = 'pyramid_tm.explicit_manager'
 
-        config.include('pyramid_jinja2')
-        config.include('pyramid_bootstrap')
-        config.include('pyramid_sqlalchemy')
-        config.include('pyramid_tm')
-        config.include('.routes')
+    config.include('pyramid_jinja2')
+    config.include('pyramid_bootstrap')
+    config.include('pyramid_sqlalchemy')
+    config.include('pyramid_tm')
+    config.include('.routes')
 
-        config.set_csrf_storage_policy(CookieCSRFStoragePolicy())
-        config.set_default_csrf_options(require_csrf=True)
+    config.set_csrf_storage_policy(CookieCSRFStoragePolicy())
+    config.set_default_csrf_options(require_csrf=True)
 
-        config.set_security_policy(SecurityPolicy(secret=settings['core.secret']))
+    config.set_security_policy(SecurityPolicy(secret=settings['core.secret']))
 
 
-        session_factory = get_session_factory(engine_from_config(settings, prefix='sqlalchemy.'))
-        config.registry['dbsession_factory'] = session_factory
-        
-        config.add_request_method(
-            lambda request: get_tm_session(session_factory, request.tm),
-            'dbsession',
-            reify=True
-        )
-        config.scan()
-    return config.make_wsgi_app()
+    session_factory = get_session_factory(engine_from_config(settings, prefix='sqlalchemy.'))
+    config.registry['dbsession_factory'] = session_factory
+    
+    config.add_request_method(
+        lambda request: get_tm_session(session_factory, request.tm),
+        'dbsession',
+        reify=True
+    )
+    config.scan()
+
+    app = config.make_wsgi_app()
+    return app
