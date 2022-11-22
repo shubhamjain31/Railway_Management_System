@@ -1,5 +1,5 @@
 from pyramid.csrf import new_csrf_token
-from pyramid.httpexceptions import HTTPSeeOther
+from pyramid.httpexceptions import HTTPSeeOther, HTTPFound
 from pyramid.renderers import render_to_response
 from pyramid.security import (
     remember,
@@ -17,18 +17,35 @@ from ..security import (
 
 from .. import models
 from ..forms import LoginForm
-
+from validators import is_invalid
 
 @view_config(route_name='login', renderer='core:templates/login.jinja2')
 def login(request):
 
-    message = ''
+    message_data = {}
     username = ''
 
     form = LoginForm(request.POST)
     if request.method == 'POST':
         username    = form.username.data
         password    = form.password.data
+
+        if username is None:
+            message_data = {'message': 'Enter Username', 'message_type': 'error'}
+            return render_to_response('templates/login.jinja2', {'form': form, 'message_data': message_data, 'page_title': 'Login'}, request=request)
+
+        if is_invalid(username):
+            message_data = {'message': 'Enter Username', 'message_type': 'error'}
+            return render_to_response('templates/login.jinja2', {'form': form, 'message_data': message_data, 'page_title': 'Login'}, request=request)
+
+        if password is None:
+            message_data = {'message': 'Enter Password', 'message_type': 'error'}
+            return render_to_response('templates/login.jinja2', {'form': form, 'message_data': message_data, 'page_title': 'Login'}, request=request)
+        
+        if is_invalid(password):
+            message_data = {'message': 'Enter Password', 'message_type': 'error'}
+            return render_to_response('templates/login.jinja2', {'form': form, 'message_data': message_data, 'page_title': 'Login'}, request=request)
+
         user = (
             request.dbsession.query(models.User)
             .filter_by(username=username)
@@ -42,10 +59,10 @@ def login(request):
             request.session['fullname'] = user.name
 
             return HTTPSeeOther(location=request.route_url('home'), headers=headers)
-        message = 'Failed login'
+        message_data = {'message': 'Failed login', 'message_type': 'error'}
         request.response.status = 400
 
-    return render_to_response('templates/login.jinja2', {'form': form, 'message': message, 'page_title': 'Login'}, request=request)
+    return render_to_response('templates/login.jinja2', {'form': form, 'message_data': message_data, 'page_title': 'Login'}, request=request)
     
 @view_config(route_name='logout')
 def logout(request):
