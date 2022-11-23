@@ -4,3 +4,5 @@ python setup.py develop
 
 
 pcreate -s starter MyProject
+
+gunicorn --paste development.ini -b :8080
