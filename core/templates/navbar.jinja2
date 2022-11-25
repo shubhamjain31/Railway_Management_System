@@ -26,7 +26,7 @@
 
             {% if request.authenticated_userid %}
             <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/reservation/logout/">Logout</a>
+                <a class="nav-link" href="{{request.route_url('logout')}}">Logout</a>
             </li>
             {% else %}
 

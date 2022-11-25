@@ -15,6 +15,7 @@ from sqlalchemy.types import (
     Unicode,
     UnicodeText,
     String,
+    Float
     )
 
 from sqlalchemy.sql import func
@@ -62,6 +63,23 @@ class User(Base):
     password = synonym('_password', descriptor=password)
 
     def __init__(self, *args, **kwargs):
+        if kwargs['username'] == "admin":
+            self.is_superuser = True
+            
         super().__init__(*args, **kwargs)
         self.date_joined = datetime.now()
         self.token = secrets.token_urlsafe(64)
+
+class Trains(Base):
+    """
+    Application's train model.
+    """
+    __tablename__ = 'trains'
+
+    train_id            = Column(Integer, primary_key=True)
+    train_name          = Column(String(50), nullable=False)
+    source              = Column(Unicode(150))
+    destination         = Column(Unicode(150))
+    price               = Column(Float)
+    seats_available     = Column(Integer, nullable=False)
+    time                = Column(DateTime, default=datetime.utcnow)
