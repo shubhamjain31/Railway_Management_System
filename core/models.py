@@ -15,7 +15,8 @@ from sqlalchemy.types import (
     Unicode,
     UnicodeText,
     String,
-    Float
+    Float,
+    Text
     )
 
 from sqlalchemy.sql import func
@@ -50,6 +51,8 @@ class User(Base):
     is_staff        = Column(Boolean, unique=False, default=False)
     is_verified     = Column(Boolean, unique=False, default=False)
     date_joined     = Column(DateTime, nullable=False)
+    ip_address      = Column(String(50), nullable=False)
+    browser_info    = Column(Text, nullable=True)
 
     _password = Column('password', Unicode(60))
 
@@ -77,9 +80,12 @@ class Trains(Base):
     __tablename__ = 'trains'
 
     train_id            = Column(Integer, primary_key=True)
+    train_number        = Column(String(50), nullable=False)
     train_name          = Column(String(50), nullable=False)
     source              = Column(Unicode(150))
     destination         = Column(Unicode(150))
     price               = Column(Float)
     seats_available     = Column(Integer, nullable=False)
-    time                = Column(DateTime, default=datetime.utcnow)
+    time                = Column(DateTime, nullable=False)
+    ip_address          = Column(String(50), nullable=False)
+    browser_info        = Column(Text, nullable=True)

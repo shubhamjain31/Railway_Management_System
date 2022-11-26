@@ -1,8 +1,11 @@
-pserve development.ini --reload
+1) Starter project command:
+    pcreate -s starter MyProject
 
-python setup.py develop
+2) Start Sqlalchemy:
+    pcreate -s alchemy MyProject
 
+3) python setup.py develop
 
-pcreate -s starter MyProject
-
-gunicorn --paste development.ini -b :8080
+4) pserve development.ini --reload
+    OR
+    gunicorn --paste development.ini -b :8080

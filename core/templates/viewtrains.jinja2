@@ -32,11 +32,11 @@
                     {%for p in all_trains%}
                     
                     <tr>
-                        <td><a href="http://127.0.0.1:8000/reservation/{{p.pk}}">{{p.pk}}</a></td>
-                        <td>{{p.train_name}}</td>
-                        <td>{{p.source}}</td>
-                        <td>{{p.destination}}</td>
-                        <td>{{p.time}}</td>
+                        <td>{{p.train_number}}</td>
+                        <td>{{p.train_name|title}}</td>
+                        <td>{{p.source|title}}</td>
+                        <td>{{p.destination|title}}</td>
+                        <td>{{p.time|date_format}}</td>
                         <td>{{p.price}}</td>
                         <td>{{p.seats_available}}</td>
                     </tr>

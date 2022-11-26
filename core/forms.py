@@ -15,6 +15,7 @@ class LoginForm(Form):
     password    = PasswordField('Password', [Length(min=8)], render_kw={"placeholder": "Password"})
 
 class TrainForm(Form):
+    train_number        = StringField('Train Number', [InputRequired("Please enter train number.")], filters=[strip_filter], render_kw={"placeholder": "Train Number"})
     train_name          = StringField('Train Name', [InputRequired("Please enter train name.")], filters=[strip_filter], render_kw={"placeholder": "Train Name"})
     source              = StringField('Source', [InputRequired("Please enter your source.")], render_kw={"placeholder": "Source"})
     destination         = StringField('Destination', [InputRequired("Please enter your destination.")], render_kw={"placeholder": "Destination"})

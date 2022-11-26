@@ -13,6 +13,10 @@
                     <input type="hidden" name="csrf_token" value="{{ get_csrf_token() }}">
 
                      <div class="form-group">
+                        {{render_train_field(form.train_number)}}
+                    </div>
+
+                    <div class="form-group">
                         {{render_train_field(form.train_name)}}
                     </div>
 
