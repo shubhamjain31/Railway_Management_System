@@ -32,7 +32,7 @@
                     {%for p in all_trains%}
                     
                     <tr>
-                        <td>{{p.train_number}}</td>
+                        <td><a href="{{request.route_url('train', slug=p.slug)}}">{{p.train_number}}</a></td>
                         <td>{{p.train_name|title}}</td>
                         <td>{{p.source|title}}</td>
                         <td>{{p.destination|title}}</td>

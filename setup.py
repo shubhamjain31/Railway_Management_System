@@ -24,7 +24,8 @@ requires = [
     'cryptacular',
     'waitress',
     'bcrypt',
-    'wtforms'
+    'wtforms',
+    'python-slugify'
 ]
 
 tests_require = [

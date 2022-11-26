@@ -55,8 +55,9 @@ def login(request):
             new_csrf_token(request)
             headers = remember(request, user.user_id)
 
-            request.session['username'] = user.username
-            request.session['fullname'] = user.name
+            request.session['username']     = user.username
+            request.session['fullname']     = user.name
+            request.session['is_superuser'] = user.is_superuser
 
             return HTTPSeeOther(location=request.route_url('home'), headers=headers)
         message_data = {'message': 'Failed login', 'message_type': 'error'}

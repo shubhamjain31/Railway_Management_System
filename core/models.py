@@ -21,7 +21,8 @@ from sqlalchemy.types import (
 
 from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base
-
+# from webhelpers2.text import urlify 
+from slugify import slugify
 
 from datetime import datetime
 import secrets
@@ -89,3 +90,23 @@ class Trains(Base):
     time                = Column(DateTime, nullable=False)
     ip_address          = Column(String(50), nullable=False)
     browser_info        = Column(Text, nullable=True)
+
+    @property
+    def slug(self):
+        return slugify(self.train_number)
+
+class Persons(Base):
+    """
+    Application's person model.
+    """
+    __tablename__ = 'persons'
+
+    person_id                   = Column(Integer, ForeignKey('trains.train_id', ondelete='CASCADE'), primary_key=True)
+    name                        = Column(String(50), nullable=False)
+    age                         = Column(Integer, nullable=False)
+    gender                      = Column(Unicode(20))
+    email                       = Column(Unicode(150))
+    date_and_time_of_booking    = Column(DateTime, default=datetime.utcnow)
+    train                       = relationship('Trains', backref='persons')
+    ip_address                  = Column(String(50), nullable=False)
+    browser_info                = Column(Text, nullable=True)

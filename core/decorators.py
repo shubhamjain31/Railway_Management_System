@@ -2,8 +2,8 @@ from pyramid.httpexceptions import HTTPFound
 
 def login_required(wrapped):
     def wrapper(request, *args, **kw):
-        user=request.authenticated_userid
-        print(user) 
+        user = request.authenticated_userid
+        
         if user is None:
             url = request.route_url('login') 
             return HTTPFound(location=url)

@@ -11,7 +11,7 @@ from core.decorators import login_required
 @view_config(route_name='home')
 # @view_config(route_name='home', request_method="GET", renderer='json')
 def index(request):
-    # print(request.dbsession.query(User).all())
+    print(request.dbsession.query(User).all())
     # print(len(request.dbsession.query(User).all()))
     if not request.authenticated_userid:
         url = request.route_url('login') 
@@ -58,3 +58,16 @@ def addTrain(request):
         request.dbsession.add(new_train)
         return HTTPFound(location=request.route_url('addTrain'))
     return render_to_response('templates/addtrain.jinja2', {'form': form, 'page_title': 'Add Train'}, request=request)
+
+@view_config(route_name='train')
+@login_required
+def train(request):
+    slug    = request.matchdict['slug']
+
+    all_trains = request.dbsession.query(Trains)
+    if request.session['is_superuser'] is not True:
+        return render_to_response('templates/viewtrains.jinja2', {'msg': "Not an Admin", 'page_title': 'Home', 'all_trains': all_trains.all()}, request=request)
+
+    train_obj = all_trains.filter_by(train_number=slug).first()
+    persons = request.dbsession.query(Trains).filter(Trains.persons.any())
+    return render_to_response('templates/viewperson.jinja2', {'train': train_obj, 'persons': list(persons), 'page_title': 'Edit Train'}, request=request)
