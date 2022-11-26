@@ -1,0 +1,46 @@
+{% extends "layout.jinja2" %}
+{% from "jinja_helpers.jinja2" import render_train_field %}
+
+{% block content %}
+
+        <div class="container" style="display: flex;align-items: center;justify-content: center;margin-top: 100px;">
+            <div class='jumbotron' style='width: 75%; '>
+                
+                <center><div style="margin-bottom: 40px;"><h1>Add Trains</h1></div></center>
+                
+
+                <form method='POST' action=''>
+                    <input type="hidden" name="csrf_token" value="{{ get_csrf_token() }}">
+
+                     <div class="form-group">
+                        {{render_train_field(form.train_name)}}
+                    </div>
+
+                    <div class="form-group">
+                        {{render_train_field(form.source)}}
+                    </div>
+
+                    <div class="form-group">
+                        {{render_train_field(form.destination)}}
+                    </div>
+
+                    <div class="form-group">
+                        {{render_train_field(form.time)}}
+                    </div>
+
+                    <div class="form-group">
+                        {{render_train_field(form.price)}}
+                    </div>
+
+                    <div class="form-group">
+                        {{render_train_field(form.seats_available)}}
+                    </div>
+
+                   
+                    <center><input type="submit" class="btn btn-success" value='Add'></center>
+
+                </form>
+            </div>
+        </div>
+        
+{% endblock %}

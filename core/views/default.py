@@ -2,7 +2,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 from pyramid.renderers import render_to_response
 
-from ..forms import RegistrationForm, LoginForm
+from ..forms import RegistrationForm, TrainForm
 from ..models import User, Trains
 
 @view_config(route_name='home')
@@ -32,3 +32,19 @@ def register(request):
         request.dbsession.add(new_user)
         return HTTPFound(location=request.route_url('home'))
     return render_to_response('templates/register.jinja2', {'form': form, 'page_title': 'Register'}, request=request)
+
+@view_config(route_name='addTrain')
+def addTrain(request):
+    form = TrainForm(request.POST)
+    if request.method == 'POST' and form.validate():
+        train_name          = form.train_name.data
+        source              = form.source.data
+        destination         = form.destination.data
+        time                = form.time.data
+        price               = form.price.data
+        seats_available     = form.seats_available.data
+        
+        new_train = Trains(train_name=train_name, source=source, time=time, destination=destination, price=price, seats_available=seats_available)
+        request.dbsession.add(new_train)
+        return HTTPFound(location=request.route_url('addTrain'))
+    return render_to_response('templates/addtrain.jinja2', {'form': form, 'page_title': 'Add Train'}, request=request)

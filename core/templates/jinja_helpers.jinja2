@@ -15,3 +15,26 @@
 
     </div>
 {% endmacro %}
+
+
+{% macro render_train_field(field) %}
+    <div class="form-group row">
+        {{ field.label(class="form-control-label font-weight-bold text-muted col-sm-2") }}
+        {% if field.errors %}
+            <div class='col-sm-10'>
+                {{ field(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in field.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class='col-sm-10'>
+                {{ field(class="form-control") }}
+            </div>
+        {% endif %}
+
+
+    </div>
+{% endmacro %}

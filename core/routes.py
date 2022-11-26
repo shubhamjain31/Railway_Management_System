@@ -4,3 +4,4 @@ def includeme(config):
     config.add_route('register', '/api/v1/account/register')
     config.add_route('login', '/api/v1/accounts/login')
     config.add_route('logout', '/api/v1/accounts/logout')
+    config.add_route('addTrain', '/api/v1/add/train')
