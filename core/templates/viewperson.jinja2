@@ -40,10 +40,10 @@
                     {%for p in persons%}
                     <tr>
                         <td>{{p.email}}</td>
-                        <td>{{p.name}}</td>
+                        <td>{{p.name|title}}</td>
                         <td>{{p.age}}</td>
                         <td>{{p.gender}}</td>
-                        <td>{{p.date_and_time_of_booking}}</td>
+                        <td>{{p.date_and_time_of_booking|date_format}}<br>{{p.date_and_time_of_booking|time_format}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

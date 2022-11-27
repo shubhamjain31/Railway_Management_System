@@ -68,7 +68,7 @@ def train(request):
         return render_to_response('templates/viewtrains.jinja2', {'msg': "Not an Admin", 'page_title': 'Home', 'all_trains': all_trains.all()}, request=request)
 
     train_obj = all_trains.filter_by(train_number=slug).first()
-    persons = request.dbsession.query(Trains).filter(Trains.persons.any())
+    persons = request.dbsession.query(Persons).join(Trains).filter(Trains.train_number == slug).all()
     return render_to_response('templates/viewperson.jinja2', {'train': train_obj, 'persons': list(persons), 'page_title': 'Edit Train'}, request=request)
 
 temp = {}
