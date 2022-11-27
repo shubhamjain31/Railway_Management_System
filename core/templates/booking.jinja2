@@ -21,7 +21,7 @@
 
                     <select class="form-control" id="source" name="source">
                         {%for t in sources%}
-                        <option value={{t}}>{{t|title}}</option>
+                        <option value={{t|replace_underscore_with_space}}>{{t|title}}</option>
                         {% endfor %}
                     </select>
 
@@ -35,7 +35,7 @@
                   
                     <select class="form-control" id="destination" name="destination">
                         {%for t in destinations%}
-                        <option value={{t}}>{{t|title}}</option>
+                        <option value={{t|replace_underscore_with_space}}>{{t|title}}</option>
                         {% endfor %}
                     </select>
 

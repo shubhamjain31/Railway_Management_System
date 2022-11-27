@@ -9,3 +9,5 @@
 4) pserve development.ini --reload
     OR
     gunicorn --paste development.ini -b :8080
+    OR
+    pserve configs/development.ini --reload (changed)

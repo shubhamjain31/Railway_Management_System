@@ -82,7 +82,7 @@ def book(request):
     age             = request.POST.get('age')
     gender          = request.POST.get('gender')
     if request.authenticated_userid:
-        trains = request.dbsession.query(Trains).filter_by(source=source, destination=destination)
+        trains = request.dbsession.query(Trains).filter_by(source=source.replace("_", " "), destination=destination.replace("_", " "))
 
         if trains.count():
             temp['name']        = name
@@ -102,6 +102,7 @@ def book(request):
 @login_required
 def booking(request):
     slug    = request.matchdict['slug']
+    print(request.session)
 
     train_obj = request.dbsession.query(Trains)
     train_obj = train_obj.filter_by(train_number=slug).first()

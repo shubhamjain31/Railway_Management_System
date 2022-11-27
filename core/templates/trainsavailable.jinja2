@@ -24,10 +24,10 @@
             
             <tr>
                 <td>{{p.train_number}}</a></td>
-                <td>{{p.train_name}}</td>
-                <td>{{p.source}}</td>
-                <td>{{p.destination}}</td>
-                <td>{{p.time|date_time_format}}</td>
+                <td>{{p.train_name|title}}</td>
+                <td>{{p.source|title}}</td>
+                <td>{{p.destination|title}}</td>
+                <td>{{p.time|time_format}}</td>
                 <td>{{p.price}}</td>
                 <td>{{p.seats_available}}</td>
                 <td><a href="{{request.route_url('booking', slug=p.slug)}}"><button class='btn btn-success'>Book Ticket</button></a></td>
