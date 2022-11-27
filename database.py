@@ -1,4 +1,5 @@
 import sqlite3 
+from decouple import config
 
 def add_column(database_name, table_name, column_name, data_type):
 
@@ -20,5 +21,24 @@ def add_column(database_name, table_name, column_name, data_type):
     connection.commit()
     connection.close()
 
-add_column("rms.db", "users", "is_staff", "Boolean")
-add_column("rms.db", "users", "is_verified", "Boolean")
+# add_column("rms.db", "users", "is_staff", "Boolean")
+# add_column("rms.db", "users", "is_verified", "Boolean")
+
+
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, DateTime
+engine = create_engine(config("SQLALCHEMY_URL"), echo = True)
+
+meta = MetaData()
+
+students = Table(
+   'payments', meta, 
+   Column('id', Integer, primary_key = True), 
+   Column('pnr', String), 
+   Column('email', String), 
+   Column('amt', Integer), 
+   Column('name', String), 
+   Column('date', DateTime), 
+   Column('cancel', String), 
+)
+
+meta.create_all(engine)

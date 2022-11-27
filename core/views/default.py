@@ -102,7 +102,6 @@ def book(request):
 @login_required
 def booking(request):
     slug    = request.matchdict['slug']
-    print(request.session)
 
     train_obj = request.dbsession.query(Trains)
     train_obj = train_obj.filter_by(train_number=slug).first()
@@ -136,6 +135,17 @@ def bookingform(request):
 
     if request.authenticated_userid:
         return render_to_response('templates/booking.jinja2', {'sources': sources, 'page_title': 'Bookings', 'destinations': destinations}, request=request)
+    else:
+        message_data = "User not authenticated"
+        return render_to_response('templates/404.jinja2', {'message_data': message_data, 'page_title': 'Error Page'}, request=request)
+
+@view_config(route_name='mybooking')  
+@login_required
+def mybooking(request):
+
+    if request.authenticated_userid:
+        persons = request.dbsession.query(Persons).filter_by(email=request.session['email'])
+        return render_to_response('templates/mybooking.jinja2', {'persons': persons, 'page_title': 'My Bookings'}, request=request)
     else:
         message_data = "User not authenticated"
         return render_to_response('templates/404.jinja2', {'message_data': message_data, 'page_title': 'Error Page'}, request=request)

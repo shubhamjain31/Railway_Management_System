@@ -21,7 +21,6 @@ from sqlalchemy.types import (
 
 from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base
-# from webhelpers2.text import urlify 
 from slugify import slugify
 
 from datetime import datetime
@@ -110,3 +109,18 @@ class Persons(Base):
     train                       = relationship('Trains', backref='persons')
     ip_address                  = Column(String(50), nullable=False)
     browser_info                = Column(Text, nullable=True)
+
+class Payments(Base):
+    """
+    Application's person model.
+    """
+    __tablename__ = 'payments'
+
+    id                      = Column(Integer, primary_key=True)
+    pnr                     = Column(String(50), nullable=False)
+    email                   = Column(Unicode(20))
+    amt                     = Column(Integer, nullable=False)
+    cancel                  = Column(Unicode(150))
+    name                    = Column(String(50), nullable=False)
+    date                    = Column(DateTime, default=datetime.utcnow)
+    
