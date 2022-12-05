@@ -11,7 +11,7 @@ from core.decorators import login_required
 @view_config(route_name='home')
 # @view_config(route_name='home', request_method="GET", renderer='json')
 def index(request):
-    print(len(request.dbsession.query(Persons).all()))
+    # print(len(request.dbsession.query(Persons).all()))
     if not request.authenticated_userid:
         url = request.route_url('login') 
         return HTTPFound(location=url)
