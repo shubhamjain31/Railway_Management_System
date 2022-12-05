@@ -10,3 +10,4 @@ def includeme(config):
     config.add_route('book', '/api/v1/reservation/book')
     config.add_route('bookingform', '/api/v1/reservation/booking-form')
     config.add_route('mybooking', '/api/v1/mybooking')
+    config.add_route('profile', '/api/v1/profile/{id}')

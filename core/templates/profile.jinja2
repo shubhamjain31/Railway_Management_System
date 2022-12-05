@@ -1,0 +1,41 @@
+{% extends "layout.jinja2" %}
+
+{% block content %}
+
+        <div class="container" style="display: flex;align-items: center;justify-content: center;margin-top: 100px;">
+            <div class='jumbotron' style='width: 75%; '>
+                
+                <center><div style="margin-bottom: 40px;"><h1>Profile</h1></div></center>
+                
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label font-weight-bold">Name</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" id="name" value="{{person.name|title}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="age" class="col-sm-2 col-form-label font-weight-bold">Age</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" id="age" value="{{person.age}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="gender" class="col-sm-2 col-form-label font-weight-bold">Gender</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" id="gender" value="{{person.gender}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label font-weight-bold">Email</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" id="email" value="{{person.email}}" disabled>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+{% endblock %}

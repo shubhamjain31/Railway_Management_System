@@ -39,7 +39,7 @@
 
                     {%for p in persons%}
                     <tr>
-                        <td>{{p.email}}</td>
+                        <td><a href="{{request.route_url('profile', id=p.person_id)}}">{{p.email}}</a></td>
                         <td>{{p.name|title}}</td>
                         <td>{{p.age}}</td>
                         <td>{{p.gender}}</td>

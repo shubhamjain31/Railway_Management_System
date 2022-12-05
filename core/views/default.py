@@ -149,3 +149,10 @@ def mybooking(request):
     else:
         message_data = "User not authenticated"
         return render_to_response('templates/404.jinja2', {'message_data': message_data, 'page_title': 'Error Page'}, request=request)
+
+@view_config(route_name='profile')  
+@login_required
+def profile(request):
+    id    = request.matchdict['id']
+    person = request.dbsession.query(Persons).filter_by(person_id=id).first()
+    return render_to_response('templates/profile.jinja2', {'person': person, 'page_title': 'Profile'}, request=request)
