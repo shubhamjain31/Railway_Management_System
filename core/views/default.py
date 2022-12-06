@@ -21,7 +21,8 @@ def index(request):
     if request.method == 'POST':
         search = request.POST.get('search')
 
-        all_trains = request.dbsession.query(Trains).filter(or_(Trains.train_number.ilike(r"%{}%".format(search)), Trains.train_name.ilike(r"%{}%".format(search))))
+        all_trains = request.dbsession.query(Trains).filter(or_(Trains.train_number.ilike(r"%{}%".format(search)), 
+                        Trains.train_name.ilike(r"%{}%".format(search))))
         return render_to_response('templates/viewtrains.jinja2', {'page_title': 'Home', 'all_trains': list(all_trains)}, request=request)
 
 
