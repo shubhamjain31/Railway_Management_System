@@ -8,6 +8,8 @@ from ..models import User, Trains, Persons
 from datetime import datetime
 from core.decorators import login_required
 
+from sqlalchemy import or_
+
 @view_config(route_name='home')
 # @view_config(route_name='home', request_method="GET", renderer='json')
 def index(request):
@@ -15,6 +17,12 @@ def index(request):
     if not request.authenticated_userid:
         url = request.route_url('login') 
         return HTTPFound(location=url)
+
+    if request.method == 'POST':
+        search = request.POST.get('search')
+
+        all_trains = request.dbsession.query(Trains).filter(or_(Trains.train_number.ilike(r"%{}%".format(search)), Trains.train_name.ilike(r"%{}%".format(search))))
+        return render_to_response('templates/viewtrains.jinja2', {'page_title': 'Home', 'all_trains': list(all_trains)}, request=request)
 
 
     all_trains = request.dbsession.query(Trains).all()

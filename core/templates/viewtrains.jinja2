@@ -6,6 +6,19 @@
         <div style="margin-top: 50px;">
             <center><h2> Trains </h2></center>
 
+            <form method="post" action={{ u }}>
+                <input type="hidden" name="csrf_token" value="{{ get_csrf_token() }}">
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <input type="text" class="form-control w-50 mx-auto" name="search" placeholder="Search Train (i.e, Train Number/Train Name)">
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-success btn-sm">Search</button>
+                    </div>
+
+                </div>
+            </form>
+
             <table class="table table-striped" style="width: 90%;margin-left:75px ;margin-top: 30px;">
                 <thead class="thead-dark">
                     <tr>
@@ -37,7 +50,7 @@
                         <td>{{p.source|title}}</td>
                         <td>{{p.destination|title}}</td>
                         <td>{{p.time|time_format}}</td>
-                        <td>{{p.price}}</td>
+                        <td>₹ {{p.price}}</td>
                         <td>{{p.seats_available}}</td>
                     </tr>
                     
