@@ -25,7 +25,8 @@ requires = [
     'waitress',
     'bcrypt',
     'wtforms',
-    'python-slugify'
+    'python-slugify',
+    'razorpay'
 ]
 
 tests_require = [
