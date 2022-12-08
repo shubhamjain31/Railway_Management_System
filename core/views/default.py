@@ -9,6 +9,11 @@ from datetime import datetime
 from core.decorators import login_required
 
 from sqlalchemy import or_
+from decouple import config
+
+RAZORPAY_KEY_ID     = config("RAZORPAY_KEY_ID")
+RAZORPAY_SECRET_KEY = config("RAZORPAY_SECRET_KEY")
+PHONE_NUMBER        = config("PHONE_NUMBER")
 
 @view_config(route_name='home')
 # @view_config(route_name='home', request_method="GET", renderer='json')
@@ -98,7 +103,8 @@ def book(request):
             temp['age']         = age
             temp['gender']      = gender
 
-            return render_to_response('templates/trainsavailable.jinja2', {'trains': trains, 'page_title': 'Available Trains' }, request=request)
+            return render_to_response('templates/trainsavailable.jinja2', {'trains': trains, 'page_title': 'Available Trains' , 'key_id':RAZORPAY_KEY_ID
+                                    ,'phone_number':PHONE_NUMBER}, request=request)
         else:
             message_data = "Not Found"
             return render_to_response('templates/404.jinja2', {'message_data': message_data, 'page_title': 'Error Page'}, request=request)
