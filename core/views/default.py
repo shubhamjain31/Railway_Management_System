@@ -118,8 +118,10 @@ def book(request):
 def booking(request):
     slug    = request.matchdict['slug']
 
+    print(request.POST, slug)
     train_obj = request.dbsession.query(Trains)
     train_obj = train_obj.filter_by(train_number=slug).first()
+    return render_to_response('templates/viewperson.jinja2', {'message_data': 'message_data', 'page_title': 'View Person', 'train':train_obj}, request=request)
 
     if train_obj.seats_available == 0:
         return render_to_response('templates/viewtrains.jinja2', {'msg': "Not an Admin", 'page_title': 'Home', 'all_trains': train_obj.all()}, request=request)
