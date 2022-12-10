@@ -28,17 +28,26 @@ def add_column(database_name, table_name, column_name, data_type):
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, DateTime
 engine = create_engine(config("SQLALCHEMY_URL"), echo = True)
 
-meta = MetaData()
+# meta = MetaData()
 
-students = Table(
-   'payments', meta, 
-   Column('id', Integer, primary_key = True), 
-   Column('pnr', String), 
-   Column('email', String), 
-   Column('amt', Integer), 
-   Column('name', String), 
-   Column('date', DateTime), 
-   Column('cancel', String), 
-)
+# students = Table(
+#    'payments', meta, 
+#    Column('id', Integer, primary_key = True), 
+#    Column('pnr', String), 
+#    Column('email', String), 
+#    Column('amt', Integer), 
+#    Column('name', String), 
+#    Column('date', DateTime), 
+#    Column('cancel', String), 
+# )
 
-meta.create_all(engine)
+# meta.create_all(engine)
+
+from sqlalchemy.dialects.postgresql import JSON
+def add_column(engine, table_name, column):
+    column_name = column.compile(dialect=engine.dialect)
+    column_type = column.type.compile(engine.dialect)
+    engine.execute('ALTER TABLE %s ADD COLUMN %s %s' % (table_name, column_name, column_type))
+
+column = Column('response', JSON)
+add_column(engine, 'payments', column)

@@ -6,7 +6,7 @@ def includeme(config):
     config.add_route('logout', '/api/v1/accounts/logout')
     config.add_route('addTrain', '/api/v1/add/train')
     config.add_route('train', '/api/v1/train/{slug}')
-    config.add_route('booking', '/api/v1/reservation/booking/{slug}')
+    config.add_route('booking', '/api/v1/reservation/booking')
     config.add_route('book', '/api/v1/reservation/book')
     config.add_route('bookingform', '/api/v1/reservation/booking-form')
     config.add_route('mybooking', '/api/v1/mybooking')

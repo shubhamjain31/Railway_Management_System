@@ -20,6 +20,7 @@ from sqlalchemy.types import (
     )
 
 from sqlalchemy.sql import func
+from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.declarative import declarative_base
 from slugify import slugify
 
@@ -121,6 +122,7 @@ class Payments(Base):
     email                   = Column(Unicode(20))
     amt                     = Column(Integer, nullable=False)
     cancel                  = Column(Unicode(150))
+    response                = Column(JSON)
     name                    = Column(String(50), nullable=False)
     date                    = Column(DateTime, default=datetime.utcnow)
     

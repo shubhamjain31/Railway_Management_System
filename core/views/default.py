@@ -3,7 +3,7 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.renderers import render_to_response
 
 from ..forms import RegistrationForm, TrainForm
-from ..models import User, Trains, Persons
+from ..models import User, Trains, Persons, Payments
 
 from datetime import datetime
 from core.decorators import login_required
@@ -11,9 +11,13 @@ from core.decorators import login_required
 from sqlalchemy import or_
 from decouple import config
 
+import razorpay, random
+
 RAZORPAY_KEY_ID     = config("RAZORPAY_KEY_ID")
 RAZORPAY_SECRET_KEY = config("RAZORPAY_SECRET_KEY")
 PHONE_NUMBER        = config("PHONE_NUMBER")
+
+client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_SECRET_KEY))
 
 @view_config(route_name='home')
 # @view_config(route_name='home', request_method="GET", renderer='json')
@@ -116,19 +120,28 @@ def book(request):
 @view_config(route_name='booking')  
 @login_required
 def booking(request):
-    slug    = request.matchdict['slug']
+    slug          = request.POST.get('slug')
+    price         = request.POST.get('price')
+    print(slug, price,'wewew')
 
-    print(request.POST, slug)
     train_obj = request.dbsession.query(Trains)
     train_obj = train_obj.filter_by(train_number=slug).first()
-    return render_to_response('templates/viewperson.jinja2', {'message_data': 'message_data', 'page_title': 'View Person', 'train':train_obj}, request=request)
 
+    
     if train_obj.seats_available == 0:
         return render_to_response('templates/viewtrains.jinja2', {'msg': "Not an Admin", 'page_title': 'Home', 'all_trains': train_obj.all()}, request=request)
     train_obj.seats_available -= 1
 
+    data = { "amount": int(price)*100, "currency": "INR", "payment_capture": 1 }
+
+    payment = client.order.create(data=data)
+    payment_obj = Payments(pnr=str(random.randint(1000000000,9999999999)), email=request.session['email'], amt=price, cancel='No', response=payment,
+                name=temp['name'])
+
     new_person = Persons(train=train_obj, name=temp['name'], email=request.session['email'],age=temp['age'],gender=temp['gender'],
                      ip_address=request.remote_addr)
+                     
+    request.dbsession.add(payment_obj)
     request.dbsession.add(new_person)
     request.dbsession.add(train_obj)
 
