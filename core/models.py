@@ -101,7 +101,8 @@ class Persons(Base):
     """
     __tablename__ = 'persons'
 
-    person_id                   = Column(Integer, ForeignKey('trains.train_id', ondelete='CASCADE'), primary_key=True)
+    person_id                   = Column(Integer, primary_key=True)
+    trains                      = Column(Integer, ForeignKey('trains.train_id', ondelete='CASCADE'))
     name                        = Column(String(50), nullable=False)
     age                         = Column(Integer, nullable=False)
     gender                      = Column(Unicode(20))
