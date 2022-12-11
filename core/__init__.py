@@ -24,7 +24,7 @@ def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
 
-    my_session_factory = SignedCookieSessionFactory('seekrit')
+    my_session_factory = SignedCookieSessionFactory('seekrit', timeout=None)
     config = Configurator(settings=settings, session_factory=my_session_factory)
     settings['tm.manager_hook'] = 'pyramid_tm.explicit_manager'
 
