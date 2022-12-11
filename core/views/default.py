@@ -6,7 +6,7 @@ from ..forms import RegistrationForm, TrainForm
 from ..models import User, Trains, Persons, Payments
 
 from datetime import datetime
-from core.decorators import login_required
+from core.decorators import login_required, is_authenticate
 
 from sqlalchemy import or_
 from decouple import config
@@ -21,11 +21,10 @@ client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_SECRET_KEY))
 
 @view_config(route_name='home')
 # @view_config(route_name='home', request_method="GET", renderer='json')
+@login_required
+@is_authenticate
 def index(request):
     # print(len(request.dbsession.query(Persons).all()))
-    if not request.authenticated_userid:
-        url = request.route_url('login') 
-        return HTTPFound(location=url)
 
     if request.method == 'POST':
         search = request.POST.get('search')
@@ -55,6 +54,7 @@ def register(request):
 
 @view_config(route_name='addTrain')
 @login_required
+@is_authenticate
 def addTrain(request):
     form = TrainForm(request.POST)
     if request.method == 'POST' and form.validate():
@@ -78,6 +78,7 @@ def addTrain(request):
 
 @view_config(route_name='train')
 @login_required
+@is_authenticate
 def train(request):
     slug    = request.matchdict['slug']
 
@@ -92,6 +93,7 @@ def train(request):
 temp = {}
 @view_config(route_name='book')  
 @login_required
+@is_authenticate
 def book(request):
     global temp
     source          = request.POST.get('source')
@@ -119,6 +121,7 @@ def book(request):
 
 @view_config(route_name='booking')  
 @login_required
+@is_authenticate
 def booking(request):
     slug          = request.POST.get('slug')
     price         = request.POST.get('price')
@@ -150,6 +153,7 @@ def booking(request):
 
 @view_config(route_name='bookingform')  
 @login_required
+@is_authenticate
 def bookingform(request):
 
     all_trains = request.dbsession.query(Trains).all()
@@ -171,6 +175,7 @@ def bookingform(request):
 
 @view_config(route_name='mybooking')  
 @login_required
+@is_authenticate
 def mybooking(request):
 
     if request.authenticated_userid:
@@ -182,6 +187,7 @@ def mybooking(request):
 
 @view_config(route_name='profile')  
 @login_required
+@is_authenticate
 def profile(request):
     id    = request.matchdict['id']
     person = request.dbsession.query(Persons).filter_by(person_id=id).first()
