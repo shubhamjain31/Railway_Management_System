@@ -89,6 +89,7 @@ class Trains(Base):
     seats_available     = Column(Integer, nullable=False)
     time                = Column(DateTime, nullable=False)
     ip_address          = Column(String(50), nullable=False)
+    duration            = Column(String(50), nullable=True)
     browser_info        = Column(Text, nullable=True)
 
     @property
