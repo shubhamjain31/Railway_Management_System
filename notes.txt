@@ -11,3 +11,11 @@
     gunicorn --paste development.ini -b :8080
     OR
     pserve configs/development.ini --reload (changed)
+
+################################################################################################
+apt-get install sox ffmpeg libcairo2 libcairo2-dev
+apt-get install texlive-full
+pip3 install manimlib
+pip3 install manimce
+
+sudo apt install libgirepository1.0-dev
